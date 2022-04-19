@@ -1,25 +1,20 @@
-FROM debian:jessie
-MAINTAINER Nicolas Limage <github@xephon.org>
+FROM debian:buster
+MAINTAINER Nilton Oliveira <jniltinho@gmail.com>
 
-ARG PYTHON_VERSION=3.4
+ARG PYTHON_VERSION=3
 ENV PYTHON_VERSION $PYTHON_VERSION
 ENV PYTHON python$PYTHON_VERSION
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get -y install \
     $PYTHON \
     $PYTHON-dev \
+    $PYTHON-pip \
     upx-ucl \
     binutils \
     && rm -rf /var/lib/apt/lists/*
 
-COPY get-pip.py /usr/local/bin/
-RUN $PYTHON /usr/local/bin/get-pip.py
-RUN test -f /usr/bin/python || ln -s $PYTHON /usr/bin/python
+RUN PYI_STATIC_ZLIB=1 pip3 install pyinstaller termcolor distro
 
-ARG PYINSTALLER_VERSION=3.1.1
-ARG PYSCHEMA_VERSION=0.6.5
-ARG PYYAML_VERSION=3.12
-RUN $PYTHON -m pip install pyinstaller==$PYINSTALLER_VERSION pyyaml==$PYYAML_VERSION schema==$PYSCHEMA_VERSION
 
 VOLUME /data
 WORKDIR /data
