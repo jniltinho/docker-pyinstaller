@@ -13,7 +13,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get -y install \
     binutils \
     && rm -rf /var/lib/apt/lists/*
 
-RUN PYI_STATIC_ZLIB=1 pip3 install pyinstaller termcolor distro pyyaml
+RUN PYI_STATIC_ZLIB=1 pip3 install pyinstaller pyyaml
 
 
 VOLUME /data
