@@ -1,6 +1,9 @@
 FROM debian:buster
 MAINTAINER Nilton Oliveira <jniltinho@gmail.com>
 
+## docker build --no-cache -t jniltinho/pyinstaller .
+## docker push jniltinho/pyinstaller
+
 ARG PYTHON_VERSION=3
 ENV PYTHON_VERSION $PYTHON_VERSION
 ENV PYTHON python$PYTHON_VERSION
