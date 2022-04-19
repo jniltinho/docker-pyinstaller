@@ -9,7 +9,7 @@ Basic Usage
 
 Build the image (if you did not pull it from docker hub)
 
-    # docker build -t pyinstaller .
+    # docker build --no-cache -t jniltinho/pyinstaller .
 
 Create a directory for your script. In this example, we will use `./data`.
 
@@ -25,7 +25,7 @@ Put your python script in the data directory
 Run the docker image, binding the data dir to the container's `/data` directory.
 This will compile your script.
 
-    # docker run --rm -ti -v $(pwd)/data:/data pyinstaller build --onefile hello.py
+    # docker run --rm -ti -v $(pwd)/data:/data jniltinho/pyinstaller build --onefile hello.py
 
 The builder does its duty and you will find the result in the `./data/dist` directory.
 
@@ -75,7 +75,7 @@ You can also write your own script to fit all your needs.
 
 Then, start the build using the `exec` command:
 
-    # docker run --rm -ti -v $(pwd)/data:/data pyinstaller exec ./build.sh
+    # docker run --rm -ti -v $(pwd)/data:/data jniltinho/pyinstaller exec ./build.sh
 
 Customizing the build
 ---------------------
@@ -93,5 +93,5 @@ For the helper:
 
 Example:
 
-    # docker build -t pyinstaller:python2.7 --build-arg PYTHON_VERSION=2.7 .
+    # docker build -t pyinstaller:python2.7 --build-arg PYTHON_VERSION=3.7 .
 
