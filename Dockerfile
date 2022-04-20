@@ -1,22 +1,18 @@
-FROM debian:buster
+FROM python:3.7-slim-buster
 MAINTAINER Nilton Oliveira <jniltinho@gmail.com>
 
 ## docker build --no-cache -t jniltinho/pyinstaller .
 ## docker push jniltinho/pyinstaller
 
-ARG PYTHON_VERSION=3
-ENV PYTHON_VERSION $PYTHON_VERSION
-ENV PYTHON python$PYTHON_VERSION
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get -y install \
-    $PYTHON \
-    $PYTHON-dev \
-    $PYTHON-pip \
-    upx-ucl \
-    binutils \
-    && rm -rf /var/lib/apt/lists/*
+RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install -y --no-install-recommends binutils xz-utils curl \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/apt/archive/*.deb
 
-RUN PYI_STATIC_ZLIB=1 pip3 install pyinstaller pyyaml
+RUN PYI_STATIC_ZLIB=1 pip install pyinstaller pyyaml && pip cache purge
+
+RUN curl -skLO https://github.com/upx/upx/releases/download/v3.96/upx-3.96-amd64_linux.tar.xz \
+    && tar -xf upx-3.96-amd64_linux.tar.xz && cp upx-3.96-amd64_linux/upx /usr/local/bin/ \
+    && chmod +x /usr/local/bin/upx && rm -rf upx-3.96*
 
 
 VOLUME /data
