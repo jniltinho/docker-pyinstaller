@@ -66,13 +66,46 @@ Then, start the build using the `autobuild` command:
 
 You can also write your own script to fit all your needs.
 
-    # cat <<EOF >data/build.sh
-    #!/bin/sh
-    pip install .
-    pyinstaller --onefile ./hello.py
-    EOF
-    # chmod +x data/build.sh
+```
+mkdir data
+cat <<EOF >data/build.sh
+#!/bin/bash
+pip3 --no-cache-dir install -r requirements.txt
+rm -rf slack_client dist *.spec build dist *pycache*
+pyinstaller --onefile ./slack_client.py
+mv dist/slack_client . ;rm -rf *.spec build dist *pycache*
+EOF
+ 
+cat <<EOF >data/requirements.txt
+prettytable
+requests
+slackclient
+EOF
 
+cat <<EOF >data/slack_client.py
+import logging
+logging.basicConfig(level=logging.DEBUG)
+
+import os
+from slack import WebClient
+from slack.errors import SlackApiError
+
+slack_token = os.environ["SLACK_API_TOKEN"]
+client = WebClient(token=slack_token)
+
+try:
+  response = client.chat_postMessage(
+    channel="C0XXXXXX",
+    text="Hello from your app! :tada:"
+  )
+except SlackApiError as e:
+  assert e.response["error"]
+EOF
+```
+
+ # chmod +x data/build.sh
+ ```
+ 
 Then, start the build using the `exec` command:
 
     # docker run --rm -ti -v $(pwd)/data:/data jniltinho/pyinstaller exec ./build.sh
