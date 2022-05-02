@@ -101,10 +101,9 @@ try:
 except SlackApiError as e:
   assert e.response["error"]
 EOF
-```
 
- # chmod +x data/build.sh
- ```
+chmod +x data/build.sh
+```
  
 Then, start the build using the `exec` command:
 
