@@ -8,7 +8,7 @@ MAINTAINER Nilton Oliveira <jniltinho@gmail.com>
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install -y --no-install-recommends binutils xz-utils curl \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/apt/archive/*.deb
 
-RUN PYI_STATIC_ZLIB=1 pip install pyinstaller pyyaml && pip cache purge
+RUN PYI_STATIC_ZLIB=1 python3 -m pip install pip wheel setuptools virtualenv pyinstaller pyyaml
 
 RUN curl -skLO https://github.com/upx/upx/releases/download/v3.96/upx-3.96-amd64_linux.tar.xz \
     && tar -xf upx-3.96-amd64_linux.tar.xz && cp upx-3.96-amd64_linux/upx /usr/local/bin/ \
