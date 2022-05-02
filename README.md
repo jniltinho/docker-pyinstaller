@@ -66,7 +66,7 @@ Then, start the build using the `autobuild` command:
 
 You can also write your own script to fit all your needs.
 
-```
+```shell
 mkdir data
 cat <<EOF >data/build.sh
 #!/bin/bash
