@@ -9,7 +9,7 @@ Basic Usage
 
 Build the image (if you did not pull it from docker hub)
 
-    # docker build --no-cache -t jniltinho/pyinstaller .
+    # docker build --no-cache -t ghcr.io/jniltinho/pyinstaller .
 
 Create a directory for your script. In this example, we will use `./data`.
 
@@ -25,7 +25,7 @@ Put your python script in the data directory
 Run the docker image, binding the data dir to the container's `/data` directory.
 This will compile your script.
 
-    # docker run --rm -ti -v $(pwd)/data:/data jniltinho/pyinstaller build --onefile hello.py
+    # docker run --rm -ti -v $(pwd)/data:/data ghcr.io/jniltinho/pyinstaller build --onefile hello.py
 
 The builder does its duty and you will find the result in the `./data/dist` directory.
 
@@ -107,23 +107,6 @@ chmod +x data/build.sh
  
 Then, start the build using the `exec` command:
 
-    # docker run --rm -ti -v $(pwd)/data:/data jniltinho/pyinstaller exec ./build.sh
+    # docker run --rm -ti -v $(pwd)/data:/data ghcr.io/jniltinho/pyinstaller exec ./build.sh
 
-Customizing the build
----------------------
-
-You can customize the python and pyinstaller versions that you use by defining
-the some build args:
-
-- `PYTHON_VERSION`
-- `PYINSTALLER_VERSION`
-
-For the helper:
-
-- `PYSCHEMA_VERSION`
-- `PYYAML_VERSION`
-
-Example:
-
-    # docker build -t pyinstaller:python2.7 --build-arg PYTHON_VERSION=3.7 .
 
