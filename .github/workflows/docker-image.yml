@@ -21,8 +21,7 @@ jobs:
       uses: docker/login-action@v1.14.1
       with:
         registry: ghcr.io
-        username: ${{github.repository_owner}}
-        password: ${{secrets.GITHUB_TOKEN}}
+
     - run: |
         docker build --no-cache . -f Dockerfile -t ${IMAGE_NAME}:latest
         docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:${GITHUB_SHA::6}
