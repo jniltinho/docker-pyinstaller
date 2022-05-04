@@ -4,8 +4,9 @@ MAINTAINER Nilton Oliveira <jniltinho@gmail.com>
 ## docker build --no-cache -t jniltinho/pyinstaller .
 ## docker push jniltinho/pyinstaller
 
+ENV DEBIAN_FRONTEND noninteractive
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get install -y --no-install-recommends binutils xz-utils curl \
+RUN apt-get -qq update && apt-get install -y --no-install-recommends binutils xz-utils curl \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/apt/archive/*.deb
 
 RUN PYI_STATIC_ZLIB=1 python3 -m pip install pip wheel setuptools virtualenv pyinstaller pyyaml
